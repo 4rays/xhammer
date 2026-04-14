@@ -50,6 +50,7 @@ enum Commands {
     print("Usage: xhammer <command> [args]")
     print("")
     print("Commands:")
+    print("  version                    Show version")
     for cmd in all {
       print("  \(cmd.usage)")
     }

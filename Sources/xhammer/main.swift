@@ -17,6 +17,12 @@ if commandName == "--help" || commandName == "-h" || commandName == "help" {
   exit(0)
 }
 
+// Handle version
+if commandName == "--version" || commandName == "-v" || commandName == "version" {
+  print("xhammer 0.1.0")
+  exit(0)
+}
+
 guard let command = Commands.find(named: commandName) else {
   fputs("error: unknown command '\(commandName)'\n\n", stderr)
   Commands.printHelp()
