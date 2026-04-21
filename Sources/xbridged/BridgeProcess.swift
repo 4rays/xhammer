@@ -1,6 +1,6 @@
 import Darwin
 import Foundation
-import XhammerCore
+import XbridgeCore
 
 /// Manages the xcrun mcpbridge child process, including launch, I/O, and restart.
 actor BridgeProcess {
@@ -84,7 +84,7 @@ actor BridgeProcess {
     state = .stopped
     readTask?.cancel()
     readTask = nil
-    failPending(XhammerError.bridgeNotRunning)
+    failPending(XbridgeError.bridgeNotRunning)
   }
 
   // MARK: - Send
@@ -92,11 +92,11 @@ actor BridgeProcess {
   /// Send a request and await the correlated response.
   func send(_ request: MCPRequest) async throws -> MCPResponse {
     guard case .running = state, stdinFD >= 0 else {
-      throw XhammerError.bridgeNotRunning
+      throw XbridgeError.bridgeNotRunning
     }
     let data = try JSONEncoder().encode(request)
     guard let line = String(data: data, encoding: .utf8) else {
-      throw XhammerError.decodingError("Could not encode MCP request")
+      throw XbridgeError.decodingError("Could not encode MCP request")
     }
     let lineData = Data((line + "\n").utf8)
 
@@ -111,7 +111,7 @@ actor BridgeProcess {
         }
       }
       if failed {
-        continuation.resume(throwing: XhammerError.writeFailed)
+        continuation.resume(throwing: XbridgeError.writeFailed)
       } else {
         pendingResponses[request.id] = continuation
       }
@@ -120,7 +120,7 @@ actor BridgeProcess {
 
   /// Write a notification line that expects no response.
   func sendRaw(_ line: String) throws {
-    guard stdinFD >= 0 else { throw XhammerError.bridgeNotRunning }
+    guard stdinFD >= 0 else { throw XbridgeError.bridgeNotRunning }
     let lineData = Data((line + "\n").utf8)
     lineData.withUnsafeBytes { ptr in
       var offset = 0
@@ -150,7 +150,7 @@ actor BridgeProcess {
     stdinFD = -1
     readTask?.cancel()
     readTask = nil
-    failPending(XhammerError.bridgeNotRunning)
+    failPending(XbridgeError.bridgeNotRunning)
   }
 
   private func failPending(_ error: Error) {

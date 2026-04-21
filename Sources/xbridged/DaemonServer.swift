@@ -1,5 +1,5 @@
 import Foundation
-import XhammerCore
+import XbridgeCore
 
 /// The main coordinator for xhammerd.
 ///
@@ -21,7 +21,7 @@ actor DaemonServer {
   // MARK: - Run
 
   func run() async throws {
-    try XhammerPaths.ensureDirectoryExists()
+    try XbridgePaths.ensureDirectoryExists()
     await stateStore.writePID(Int32(ProcessInfo.processInfo.processIdentifier))
 
     logger.info("Starting MCP client...")
@@ -32,9 +32,9 @@ actor DaemonServer {
       await self.handleConnection(fd: fd)
     }
     socketServer = server
-    try await server.start(socketPath: XhammerPaths.socketPath.path)
+    try await server.start(socketPath: XbridgePaths.socketPath.path)
 
-    logger.info("xhammerd ready")
+    logger.info("xbridged ready")
 
     // Block until the process receives a signal (SIGTERM/SIGINT handled in main.swift).
     try await Task.sleep(nanoseconds: .max)

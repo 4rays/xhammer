@@ -1,5 +1,5 @@
 import Foundation
-import XhammerCore
+import XbridgeCore
 
 let args = Array(CommandLine.arguments.dropFirst())
 
@@ -19,7 +19,7 @@ if commandName == "--help" || commandName == "-h" || commandName == "help" {
 
 // Handle version
 if commandName == "--version" || commandName == "-v" || commandName == "version" {
-  print("xhammer 0.1.2")
+  print("xbridge 0.1.2")
   exit(0)
 }
 
@@ -31,7 +31,7 @@ guard let command = Commands.find(named: commandName) else {
 
 guard commandArgs.count >= command.minArgs else {
   fputs("error: '\(commandName)' requires at least \(command.minArgs) argument(s)\n", stderr)
-  fputs("usage: xhammer \(command.usage)\n", stderr)
+  fputs("usage: xbridge \(command.usage)\n", stderr)
   exit(1)
 }
 

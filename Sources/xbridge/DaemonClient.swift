@@ -1,12 +1,12 @@
 import Darwin
 import Foundation
-import XhammerCore
+import XbridgeCore
 
-/// Connects to the xhammerd daemon and sends a single request, returning the response.
+/// Connects to the xbridged daemon and sends a single request, returning the response.
 struct DaemonClient {
   private let socketPath: String
 
-  init(socketPath: String = XhammerPaths.socketPath.path) {
+  init(socketPath: String = XbridgePaths.socketPath.path) {
     self.socketPath = socketPath
   }
 
@@ -18,18 +18,18 @@ struct DaemonClient {
 
     let data = try JSONEncoder().encode(request)
     guard let line = String(data: data, encoding: .utf8) else {
-      throw XhammerError.decodingError("Failed to encode request")
+      throw XbridgeError.decodingError("Failed to encode request")
     }
 
     guard writeLine(line, fd: fd) else {
-      throw XhammerError.writeFailed
+      throw XbridgeError.writeFailed
     }
 
     guard let responseLine = readLine(fd: fd), !responseLine.isEmpty else {
-      throw XhammerError.invalidResponse("Empty response from daemon")
+      throw XbridgeError.invalidResponse("Empty response from daemon")
     }
     guard let responseData = responseLine.data(using: .utf8) else {
-      throw XhammerError.decodingError("Invalid UTF-8 in response")
+      throw XbridgeError.decodingError("Invalid UTF-8 in response")
     }
 
     return try JSONDecoder().decode(LocalRPCResponse.self, from: responseData)
@@ -48,13 +48,13 @@ struct DaemonClient {
       Thread.sleep(forTimeInterval: delay)
       if let fd = try? connect() { return fd }
     }
-    throw XhammerError.daemonNotRunning
+    throw XbridgeError.daemonNotRunning
   }
 
   private func connect() throws -> Int32 {
     let fd = Darwin.socket(AF_UNIX, SOCK_STREAM, 0)
     guard fd >= 0 else {
-      throw XhammerError.socketError("socket() failed: \(errnoString())")
+      throw XbridgeError.socketError("socket() failed: \(errnoString())")
     }
 
     var addr = sockaddr_un()
@@ -74,7 +74,7 @@ struct DaemonClient {
 
     guard result == 0 else {
       Darwin.close(fd)
-      throw XhammerError.connectionFailed(errnoString())
+      throw XbridgeError.connectionFailed(errnoString())
     }
     return fd
   }
@@ -82,12 +82,12 @@ struct DaemonClient {
   private func spawnDaemon() throws {
     let daemonURL = findDaemonExecutable()
     guard let daemonURL, FileManager.default.isExecutableFile(atPath: daemonURL.path) else {
-      throw XhammerError.connectionFailed(
-        "Cannot find xhammerd. Make sure it is installed alongside xhammer."
+      throw XbridgeError.connectionFailed(
+        "Cannot find xbridged. Make sure it is installed alongside xhammer."
       )
     }
 
-    fputs("Starting xhammerd...\n", stderr)
+    fputs("Starting xbridged...\n", stderr)
 
     let process = Process()
     process.executableURL = daemonURL
@@ -98,14 +98,14 @@ struct DaemonClient {
     do {
       try process.run()
     } catch {
-      throw XhammerError.connectionFailed("Failed to start xhammerd: \(error.localizedDescription)")
+      throw XbridgeError.connectionFailed("Failed to start xbridged: \(error.localizedDescription)")
     }
   }
 
   private func findDaemonExecutable() -> URL? {
     // Look in the same directory as the xhammer binary
     let selfPath = URL(fileURLWithPath: CommandLine.arguments[0]).resolvingSymlinksInPath()
-    let sibling = selfPath.deletingLastPathComponent().appendingPathComponent("xhammerd")
+    let sibling = selfPath.deletingLastPathComponent().appendingPathComponent("xbridged")
     if FileManager.default.fileExists(atPath: sibling.path) {
       return sibling
     }
@@ -114,7 +114,7 @@ struct DaemonClient {
       .split(separator: ":")
       .map(String.init)
     for dir in pathDirs {
-      let candidate = URL(fileURLWithPath: dir).appendingPathComponent("xhammerd")
+      let candidate = URL(fileURLWithPath: dir).appendingPathComponent("xbridged")
       if FileManager.default.isExecutableFile(atPath: candidate.path) {
         return candidate
       }

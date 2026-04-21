@@ -1,6 +1,6 @@
 import Darwin
 import Foundation
-import XhammerCore
+import XbridgeCore
 
 /// Listens on a Unix domain socket and dispatches each accepted connection to a handler.
 actor SocketServer {
@@ -22,7 +22,7 @@ actor SocketServer {
 
     let fd = Darwin.socket(AF_UNIX, SOCK_STREAM, 0)
     guard fd >= 0 else {
-      throw XhammerError.socketError("socket() failed: \(Self.errnoString())")
+      throw XbridgeError.socketError("socket() failed: \(Self.errnoString())")
     }
 
     var addr = sockaddr_un()
@@ -41,12 +41,12 @@ actor SocketServer {
     }
     guard bindResult == 0 else {
       Darwin.close(fd)
-      throw XhammerError.socketError("bind() failed: \(Self.errnoString())")
+      throw XbridgeError.socketError("bind() failed: \(Self.errnoString())")
     }
 
     guard Darwin.listen(fd, 10) == 0 else {
       Darwin.close(fd)
-      throw XhammerError.socketError("listen() failed: \(Self.errnoString())")
+      throw XbridgeError.socketError("listen() failed: \(Self.errnoString())")
     }
 
     // Owner-only permissions on the socket file

@@ -1,5 +1,5 @@
 import Foundation
-import XhammerCore
+import XbridgeCore
 
 // MARK: - Command
 
@@ -47,7 +47,7 @@ enum Commands {
   }
 
   static func printHelp() {
-    print("Usage: xhammer <command> [args]")
+    print("Usage: xbridge <command> [args]")
     print("")
     print("Commands:")
     print("  version                    Show version")
@@ -113,7 +113,7 @@ enum Commands {
         let data = raw.data(using: .utf8),
         let parsed = try? JSONDecoder().decode(JSONValue.self, from: data)
       else {
-        throw XhammerError.decodingError("Arguments must be valid JSON, e.g. '{\"key\":\"value\"}'")
+        throw XbridgeError.decodingError("Arguments must be valid JSON, e.g. '{\"key\":\"value\"}'")
       }
       arguments = parsed
     }

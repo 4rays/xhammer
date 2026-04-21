@@ -1,4 +1,4 @@
-# xhammer TODO
+# xbridge TODO
 
 ## Milestone 1 — Validate the Permission Model
 
@@ -15,9 +15,9 @@
 
 ## Milestone 3 — Polish
 
-- [ ] launchd plist (`Launchd/com.kaishin.xhammerd.plist`)
+- [ ] launchd plist (`Launchd/com.kaishin.xbridged.plist`)
 - [ ] Install script / Makefile
-- [ ] `xhammer help <command>` detailed help
+- [ ] `xbridge help <command>` detailed help
 - [ ] Better stderr formatting (colors, structured errors)
 
 ## Deferred (per spec)

@@ -1,5 +1,5 @@
 import Foundation
-import XhammerCore
+import XbridgeCore
 
 /// Formats daemon responses for human-readable terminal output.
 struct OutputFormatter {

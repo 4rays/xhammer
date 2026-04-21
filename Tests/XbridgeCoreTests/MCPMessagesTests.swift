@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import XhammerCore
+@testable import XbridgeCore
 
 @Suite("MCP message encoding and decoding")
 struct MCPMessagesTests {
@@ -105,6 +105,6 @@ struct MCPMessagesTests {
     let json = try decoder.decode([String: JSONValue].self, from: data)
 
     #expect(json["protocolVersion"]?.stringValue == "2024-11-05")
-    #expect(json["clientInfo"]?["name"]?.stringValue == "xhammer")
+    #expect(json["clientInfo"]?["name"]?.stringValue == "xbridge")
   }
 }

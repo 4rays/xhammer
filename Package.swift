@@ -3,38 +3,38 @@
 import PackageDescription
 
 let package = Package(
-  name: "xhammer",
+  name: "xbridge",
   platforms: [
     .macOS(.v14)
   ],
   products: [
-    .executable(name: "xhammer", targets: ["xhammer"]),
-    .executable(name: "xhammerd", targets: ["xhammerd"])
+    .executable(name: "xbridge", targets: ["xbridge"]),
+    .executable(name: "xbridged", targets: ["xbridged"])
   ],
   targets: [
     .executableTarget(
-      name: "xhammer",
-      dependencies: ["XhammerCore"],
-      path: "Sources/xhammer"
+      name: "xbridge",
+      dependencies: ["XbridgeCore"],
+      path: "Sources/xbridge"
     ),
     .executableTarget(
-      name: "xhammerd",
-      dependencies: ["XhammerCore"],
-      path: "Sources/xhammerd"
+      name: "xbridged",
+      dependencies: ["XbridgeCore"],
+      path: "Sources/xbridged"
     ),
     .target(
-      name: "XhammerCore",
-      path: "Sources/XhammerCore"
+      name: "XbridgeCore",
+      path: "Sources/XbridgeCore"
     ),
     .testTarget(
-      name: "XhammerCoreTests",
-      dependencies: ["XhammerCore"],
-      path: "Tests/XhammerCoreTests"
+      name: "XbridgeCoreTests",
+      dependencies: ["XbridgeCore"],
+      path: "Tests/XbridgeCoreTests"
     ),
     .testTarget(
-      name: "xhammerTests",
-      dependencies: ["XhammerCore"],
-      path: "Tests/xhammerTests"
+      name: "xbridgeTests",
+      dependencies: ["XbridgeCore"],
+      path: "Tests/xbridgeTests"
     )
   ],
   swiftLanguageModes: [.v6]

@@ -1,9 +1,9 @@
-# xhammer
+# xbridge
 
 A daemonized CLI for Xcode's MCP bridge. Keeps a single long-lived connection to `xcrun mcpbridge` so Xcode only prompts for permission once per daemon session.
 
 ```
-xhammer → unix socket → xhammerd → stdio → xcrun mcpbridge → Xcode
+xbridge → unix socket → xbridged → stdio → xcrun mcpbridge → Xcode
 ```
 
 ## Install
@@ -12,26 +12,26 @@ xhammer → unix socket → xhammerd → stdio → xcrun mcpbridge → Xcode
 make install
 ```
 
-Installs `xhammer` and `xhammerd` to `~/.local/bin`. Requires Swift 6.3+ and Xcode 16+.
+Installs `xbridge` and `xbridged` to `~/.local/bin`. Requires Swift 6.3+ and Xcode 16+.
 
 ## Usage
 
 ```bash
-xhammer list-windows                        # discover tab IDs
-xhammer build windowtab1
-xhammer test windowtab1
-xhammer read MyFile.swift windowtab1
-xhammer grep "TODO" windowtab1
-xhammer docs "SwiftUI animations"
-xhammer status
+xbridge list-windows                        # discover tab IDs
+xbridge build windowtab1
+xbridge test windowtab1
+xbridge read MyFile.swift windowtab1
+xbridge grep "TODO" windowtab1
+xbridge docs "SwiftUI animations"
+xbridge status
 ```
 
 The daemon starts automatically on first use. To manage it manually:
 
 ```bash
-xhammer status    # daemon and bridge health
-xhammer restart   # restart the MCP bridge
-xhammer stop      # shut down the daemon
+xbridge status    # daemon and bridge health
+xbridge restart   # restart the MCP bridge
+xbridge stop      # shut down the daemon
 ```
 
 ## Commands
@@ -64,14 +64,14 @@ xhammer stop      # shut down the daemon
 
 ## How It Works
 
-`xhammerd` owns the only connection to `xcrun mcpbridge`. It handles MCP initialization, tool discovery, and request correlation. The CLI connects to the daemon over a Unix domain socket at `~/Library/Application Support/xhammer/daemon.sock`.
+`xbridged` owns the only connection to `xcrun mcpbridge`. It handles MCP initialization, tool discovery, and request correlation. The CLI connects to the daemon over a Unix domain socket at `~/Library/Application Support/xbridge/daemon.sock`.
 
 Because the daemon process is stable across CLI invocations, Xcode only shows the permission prompt once per session.
 
 ## State Files
 
 ```
-~/Library/Application Support/xhammer/
+~/Library/Application Support/xbridge/
   daemon.sock   # Unix domain socket
   daemon.pid    # Daemon PID
   daemon.log    # Daemon and bridge logs

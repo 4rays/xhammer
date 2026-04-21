@@ -1,6 +1,6 @@
 import Foundation
 
-public enum XhammerError: Error, Sendable {
+public enum XbridgeError: Error, Sendable {
   case daemonNotRunning
   case connectionFailed(String)
   case bridgeNotRunning
@@ -13,11 +13,11 @@ public enum XhammerError: Error, Sendable {
   case writeFailed
 }
 
-extension XhammerError: LocalizedError {
+extension XbridgeError: LocalizedError {
   public var errorDescription: String? {
     switch self {
     case .daemonNotRunning:
-      return "xhammerd is not running"
+      return "xbridged is not running"
     case .connectionFailed(let msg):
       return "Connection to daemon failed: \(msg)"
     case .bridgeNotRunning:

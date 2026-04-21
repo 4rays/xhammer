@@ -1,9 +1,9 @@
 import Foundation
 
-public enum XhammerPaths {
+public enum XbridgePaths {
   public static var supportDirectory: URL {
     let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-    return base.appendingPathComponent("xhammer", isDirectory: true)
+    return base.appendingPathComponent("xbridge", isDirectory: true)
   }
 
   public static var socketPath: URL {

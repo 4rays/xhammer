@@ -1,6 +1,6 @@
 import Darwin
 import Foundation
-import XhammerCore
+import XbridgeCore
 
 // MARK: - Daemonize
 
@@ -25,9 +25,9 @@ sigint.resume()
 
 // MARK: - Logging
 
-_ = try? XhammerPaths.ensureDirectoryExists()
+_ = try? XbridgePaths.ensureDirectoryExists()
 
-let logFileURL = XhammerPaths.logPath
+let logFileURL = XbridgePaths.logPath
 if !FileManager.default.fileExists(atPath: logFileURL.path) {
   FileManager.default.createFile(atPath: logFileURL.path, contents: nil)
 }
@@ -40,8 +40,8 @@ if let fh = FileHandle(forWritingAtPath: logFileURL.path) {
   logFile = .standardError
 }
 
-let logger = Logger(label: "xhammerd", fileHandle: logFile)
-logger.info("xhammerd starting (PID \(ProcessInfo.processInfo.processIdentifier))")
+let logger = Logger(label: "xbridged", fileHandle: logFile)
+logger.info("xbridged starting (PID \(ProcessInfo.processInfo.processIdentifier))")
 
 // MARK: - Run
 

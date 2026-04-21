@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import XhammerCore
+@testable import XbridgeCore
 
 @Suite("LocalRPC encoding and decoding")
 struct LocalRPCTests {

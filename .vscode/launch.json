@@ -4,41 +4,41 @@
       "type": "swift",
       "request": "launch",
       "args": [],
-      "cwd": "${workspaceFolder:xhammer}",
-      "name": "Debug xhammer",
-      "target": "xhammer",
+      "cwd": "${workspaceFolder:xbridge}",
+      "name": "Debug xbridge",
+      "target": "xbridge",
       "configuration": "debug",
-      "preLaunchTask": "swift: Build Debug xhammer"
+      "preLaunchTask": "swift: Build Debug xbridge"
     },
     {
       "type": "swift",
       "request": "launch",
       "args": [],
-      "cwd": "${workspaceFolder:xhammer}",
-      "name": "Release xhammer",
-      "target": "xhammer",
+      "cwd": "${workspaceFolder:xbridge}",
+      "name": "Release xbridge",
+      "target": "xbridge",
       "configuration": "release",
-      "preLaunchTask": "swift: Build Release xhammer"
+      "preLaunchTask": "swift: Build Release xbridge"
     },
     {
       "type": "swift",
       "request": "launch",
       "args": [],
-      "cwd": "${workspaceFolder:xhammer}",
-      "name": "Debug xhammerd",
-      "target": "xhammerd",
+      "cwd": "${workspaceFolder:xbridge}",
+      "name": "Debug xbridged",
+      "target": "xbridged",
       "configuration": "debug",
-      "preLaunchTask": "swift: Build Debug xhammerd"
+      "preLaunchTask": "swift: Build Debug xbridged"
     },
     {
       "type": "swift",
       "request": "launch",
       "args": [],
-      "cwd": "${workspaceFolder:xhammer}",
-      "name": "Release xhammerd",
-      "target": "xhammerd",
+      "cwd": "${workspaceFolder:xbridge}",
+      "name": "Release xbridged",
+      "target": "xbridged",
       "configuration": "release",
-      "preLaunchTask": "swift: Build Release xhammerd"
+      "preLaunchTask": "swift: Build Release xbridged"
     }
   ]
 }

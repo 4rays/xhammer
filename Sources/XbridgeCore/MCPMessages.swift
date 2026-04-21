@@ -55,7 +55,7 @@ public struct MCPInitializeParams: Codable, Sendable {
   public init() {
     self.protocolVersion = "2024-11-05"
     self.capabilities = MCPClientCapabilities()
-    self.clientInfo = MCPClientInfo(name: "xhammer", version: "1.0.0")
+    self.clientInfo = MCPClientInfo(name: "xbridge", version: "1.0.0")
   }
 }
 

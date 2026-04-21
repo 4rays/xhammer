@@ -1,8 +1,8 @@
-# Releasing xhammer
+# Releasing xbridge
 
 ## Steps
 
-1. **Bump version** in `Sources/xhammer/main.swift` — update the string in the `version` handler to `xhammer X.Y.Z`. Do this **before** building.
+1. **Bump version** in `Sources/xbridge/main.swift` — update the string in the `version` handler to `xbridge X.Y.Z`. Do this **before** building.
 
 2. **Build release binaries:**
 
@@ -20,17 +20,17 @@
 4. **Package binaries:**
 
    ```sh
-   rm -rf /tmp/xhammer-bin && mkdir /tmp/xhammer-bin
-   cp .build/release/xhammer .build/release/xhammerd /tmp/xhammer-bin/
-   cd /tmp && tar -czf xhammer-X.Y.Z-macos.tar.gz xhammer-bin/
-   shasum -a 256 xhammer-X.Y.Z-macos.tar.gz
+   rm -rf /tmp/xbridge-bin && mkdir /tmp/xbridge-bin
+   cp .build/release/xbridge .build/release/xbridged /tmp/xbridge-bin/
+   cd /tmp && tar -czf xbridge-X.Y.Z-macos.tar.gz xbridge-bin/
+   shasum -a 256 xbridge-X.Y.Z-macos.tar.gz
    ```
 
 5. **Create GitHub release and upload tarball:**
 
    ```sh
    gh release create vX.Y.Z --title "vX.Y.Z" --notes "..." --latest
-   gh release upload vX.Y.Z /tmp/xhammer-X.Y.Z-macos.tar.gz
+   gh release upload vX.Y.Z /tmp/xbridge-X.Y.Z-macos.tar.gz
    ```
 
 6. **Update Homebrew formula** in `4rays/homebrew-tap`:
@@ -43,5 +43,5 @@
 ## Notes
 
 - Formula ships pre-built macOS binaries — no Xcode required to install.
-- Tarball structure: `xhammer-bin/xhammer` + `xhammer-bin/xhammerd`.
-- Homebrew cds into the single top-level dir (`xhammer-bin/`) on extract.
+- Tarball structure: `xbridge-bin/xbridge` + `xbridge-bin/xbridged`.
+- Homebrew cds into the single top-level dir (`xbridge-bin/`) on extract.

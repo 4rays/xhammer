@@ -1,5 +1,5 @@
 import Foundation
-import XhammerCore
+import XbridgeCore
 
 /// Implements the minimal MCP protocol needed to talk to xcrun mcpbridge.
 actor MCPClient {
@@ -40,7 +40,7 @@ actor MCPClient {
     let response = try await bridge.send(request)
 
     if let err = response.error {
-      throw XhammerError.mcpError(code: err.code, message: err.message)
+      throw XbridgeError.mcpError(code: err.code, message: err.message)
     }
 
     // Send initialized notification (no response expected)
@@ -62,10 +62,10 @@ actor MCPClient {
     let response = try await bridge.send(request)
 
     if let err = response.error {
-      throw XhammerError.mcpError(code: err.code, message: err.message)
+      throw XbridgeError.mcpError(code: err.code, message: err.message)
     }
     guard let result = response.result else {
-      throw XhammerError.invalidResponse("tools/list returned no result")
+      throw XbridgeError.invalidResponse("tools/list returned no result")
     }
 
     let resultData = try JSONEncoder().encode(result)
@@ -86,10 +86,10 @@ actor MCPClient {
     let response = try await bridge.send(request)
 
     if let err = response.error {
-      throw XhammerError.mcpError(code: err.code, message: err.message)
+      throw XbridgeError.mcpError(code: err.code, message: err.message)
     }
     guard let result = response.result else {
-      throw XhammerError.invalidResponse("tools/call returned no result")
+      throw XbridgeError.invalidResponse("tools/call returned no result")
     }
 
     // Check for tool-level errors (isError: true in result)
@@ -98,7 +98,7 @@ actor MCPClient {
       callResult.isError == true
     {
       let msg = callResult.content.compactMap(\.text).joined(separator: "\n")
-      throw XhammerError.mcpError(code: -1, message: msg.isEmpty ? "Tool call failed" : msg)
+      throw XbridgeError.mcpError(code: -1, message: msg.isEmpty ? "Tool call failed" : msg)
     }
 
     return result

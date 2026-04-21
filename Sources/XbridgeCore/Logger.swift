@@ -26,7 +26,7 @@ public struct Logger: @unchecked Sendable {
   private let fileHandle: FileHandle
   public let minimumLevel: Level
 
-  public static let stderr = Logger(label: "xhammer", fileHandle: .standardError)
+  public static let stderr = Logger(label: "xbridge", fileHandle: .standardError)
 
   public init(label: String, fileHandle: FileHandle = .standardError, minimumLevel: Level = .info) {
     self.label = label
